@@ -69,8 +69,7 @@ public:
                     p_data->lock.lock();
                     p_data->rst=rst;
                     p_data->lock.unlock();
-                }
-            }else{
+                }else{
                 this_thread::sleep_for(chrono::milliseconds(30));
             }
         }

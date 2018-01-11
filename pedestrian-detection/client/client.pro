@@ -23,11 +23,12 @@ HEADERS  += mainwindow.h \
     client.h \
     searchwidget.h
 unix{
-message(build $$TARGET on unix)
-INSTALL_PATH="/root/repo-github/install-pedestrian-detection"
-install_setting.path=$$INSTALL_PATH
-install_setting.files=$$OUT_PWD/$$TARGET
-INSTALLS=install_setting
+message(build $$TARGET on unix system)
+#INSTALL_PATH="/root/repo-github/install-pedestrian-detection"
+install_setting.path=$$OUT_PWD/install
+install_setting.files=$$OUT_PWD/$$TARGET config.json run.sh
+message(install ($$install_setting.files) in ($$install_setting.path))
+INSTALLS+=install_setting
 }else{
 message(build $$TARGET on win32)
 INSTALL_PATH="Z://install-pedestrian-detection"
