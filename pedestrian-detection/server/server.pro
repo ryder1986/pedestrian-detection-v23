@@ -25,10 +25,10 @@ SOURCES += main.cpp \
     camera.cpp \
     processeddatasender.cpp
 unix{
-message(build $$TARGET on unix system)
+message(build $$OUT_PWD/$$TARGET on unix system)
 #INSTALL_PATH="/root/repo-github/install-pedestrian-detection"
 install_setting.path=$$OUT_PWD/install
-install_setting.files=$$OUT_PWD/$$TARGET config.json run.sh
+install_setting.files=$$OUT_PWD/$$TARGET config.json run.sh hogcascade_pedestrians.xml
 message(install ($$install_setting.files) in ($$install_setting.path))
 INSTALLS+=install_setting
 }else{
