@@ -27,6 +27,9 @@
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QCheckBox" name="checkBox_3">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>show rect</string>
           </property>
@@ -238,7 +241,11 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QLineEdit" name="lineEdit_url"/>
+             <widget class="QLineEdit" name="lineEdit_url">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -250,7 +257,11 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <widget class="QLineEdit" name="lineEdit_2"/>
+             <widget class="QLineEdit" name="lineEdit_2">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -273,6 +284,9 @@
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_save">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>save</string>
               </property>

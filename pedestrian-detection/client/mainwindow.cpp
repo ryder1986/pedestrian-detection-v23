@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(search_widget,SIGNAL(select_ip(QString)),this,SLOT(connect_server(QString)),Qt::QueuedConnection);
     connect(searcher,SIGNAL(find_ip(QString)),search_widget,SLOT(add_text(QString)),Qt::QueuedConnection);
     connect(clt,SIGNAL(server_msg(QByteArray)),this,SLOT(handle_msg(QByteArray)),Qt::QueuedConnection);
-  }
+}
 
 MainWindow::~MainWindow()
 {
@@ -130,7 +130,7 @@ void MainWindow::on_treeWidget_devices_customContextMenuRequested(const QPoint &
             if(now+1>p_cfg->cfg.camera_amount)
             {
                 QAction *action_submit = cmenu->addAction("submit");
-                connect(action_submit, SIGNAL(triggered(bool)), this, SLOT(submit_camera(bool)));
+                connect(action_submit, SIGNAL(triggered(bool)), this, SLOT(submit_camera_adding(bool)));
             }
             connect(action_del, SIGNAL(triggered(bool)), this, SLOT(del_camera(bool)));
             cmenu->exec(QCursor::pos());

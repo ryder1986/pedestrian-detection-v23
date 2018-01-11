@@ -293,24 +293,6 @@ public:
         int write_bytes=0;
         prt(info,"state %d ",tcp_socket->state());
         write_bytes=tcp_socket->write(buf,len);
-        int times=10;
-        //        while (times--) {
-        //            QThread::msleep(100);
-        //            lock.lock();
-        //            if(need_read){
-        //                ret=ret_ba;
-        //                need_read=false;
-        //                prt(info,"get server reply");
-        //                lock.unlock();
-        //                break;
-        //            }
-        //            prt(info,"get nothing ");
-        //            lock.unlock();
-        //        }
-
-
-        //     if(tcp_socket->waitForReadyRead())
-        //        ret=tcp_socket->readAll();
         return ret;
     }
 

@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+//goal, handle graphic interface;
 #include <QMainWindow>
 #include "ui_form.h"
 #include "client.h"
@@ -11,7 +11,7 @@
 #include "searchwidget.h"
 using namespace std ;
 class VideoThread:public QObject{
-Q_OBJECT
+    Q_OBJECT
     typedef struct data{
         VideoSrc *p_src;
         QString url;
@@ -34,9 +34,9 @@ private:
             if(flg){
                 p_data->lock.lock();
                 if(p_data->rst.size()>0)
-                     p_data->video_render->set_rects(p_data->rst);
-                   p_data->rst.clear();
-                   p_data->lock.unlock();
+                    p_data->video_render->set_rects(p_data->rst);
+                p_data->rst.clear();
+                p_data->lock.unlock();
                 p_data->video_render->update_mat(mt);
 
             }
@@ -49,14 +49,10 @@ public:
     VideoThread(QString url,VideoWidget *widget)
     {
         d.quit=false;
-        //   p_pro=new VideoProcessor;
-
-        // p_src=new VideoSrc(url.toStdString().data());
         d.p_src=NULL;
         d.url=url;
         d.video_render=widget;
         p_thread=new std::thread(fun,&d);
-
     }
     ~VideoThread()
     {
@@ -64,7 +60,6 @@ public:
         p_thread->join();;
         delete p_thread;
         p_thread;
-
     }
 public slots:
     void get_data(QByteArray rst)
@@ -84,7 +79,7 @@ public slots:
             QRect r;
             r.setRect(l[0].toInt(),l[1].toInt(),l[2].toInt(),l[3].toInt());
 
-           // prt(info,"#### %s",l[0].toStdString().data());
+            // prt(info,"#### %s",l[0].toStdString().data());
         }
 #endif
     }
@@ -112,7 +107,6 @@ private slots:
 
     void add_camera(bool checked)
     {
-        qDebug()<<"add camera  "<<checked;
         QTreeWidgetItem *tmp_item=new QTreeWidgetItem(QStringList("edit here"));
         p_item_device_root->addChild(tmp_item);
         tmp_item->setFlags(Qt::ItemIsEditable | tmp_item->flags()) ;
@@ -122,13 +116,12 @@ private slots:
     void del_camera(bool checked)
     {
         if(p_video_thread)
-         {
-
+        {
             delete p_video_thread;
             p_video_thread=NULL;
         }
 
-        char buf[2000];
+
         qDebug()<<"del camera "<<checked;
         int now=p_item_device_current->parent()->indexOfChild(p_item_device_current);
         if(now+1>p_cfg->cfg.camera_amount)//remove camera which didnt submit yet
@@ -148,17 +141,22 @@ private slots:
             int size = p_cfg->cfg.camera_amount;
             if(del_index<=size&&del_index>0)
             {
+              #if 0
+                      char buf[2000];
                 //cam_manager->del_camera(del_index);// delete camera local
                 p_cfg->del_camera(del_index);
                 Protocol::encode_delcam_request(buf,del_index);//encode buffer
                 clt->call_server(buf,Protocol::HEAD_LENGTH);//talk to server
+            #else
+                submit_camera_deling(del_index);
+            #endif
             }
             p_item_device_root->removeChild(p_item_device_current);
 
         }
     }
 
-    void submit_camera(bool checked)
+    void submit_camera_adding(bool checked)
     {
         char buf[2000];
         QString ip=p_item_device_current->text((0));
@@ -170,60 +168,61 @@ private slots:
         // itm->setFlags(!Qt::ItemIsEditable | itm_root->flags()) ;
         p_item_device_current->setFlags(  p_item_device_current->flags() & ~Qt::ItemIsEditable) ;
     }
+    void submit_camera_deling(int del_index)
+    {
+         char buf[2000];
+        p_cfg->del_camera(del_index);
+        Protocol::encode_delcam_request(buf,del_index);//encode buffer
+        clt->call_server(buf,Protocol::HEAD_LENGTH);//talk to server
+    }
     void open_camera_output(int index)
     {
         char buf[2000];
         int len=Protocol::encode_output_request(buf,index);//encode buffer
-  //      memcpy(buf+Protocol::HEAD_LENGTH,setting.data(),len);
-        QByteArray rst=clt->call_server(buf,len);//talk to server
-        // itm->setFlags(!Qt::ItemIsEditable | itm_root->flags()) ;
-   //     p_item_device_current->setFlags(  p_item_device_current->flags() & ~Qt::ItemIsEditable) ;
+        QByteArray rst=clt->call_server(buf,len);
     }
 public slots:
     void connect_server(QString ip)
     {
-          //  char buf[2000];
-         prt(info,"connect %s",ip.toStdString().data());
-         if(ip.length()){
+        prt(info,"connect %s",ip.toStdString().data());
+        if(ip.length()){
 
-             clt->connect_to_server(ip);
+            clt->connect_to_server(ip);
 
-             //if connect ok ,then continue;
-//             int request_length=Protocol::encode_configuration_request(buf);//encoder buffer
-//             QByteArray rst=clt->call_server(buf,request_length);//talk to server
-//             rst=rst.remove(0,Protocol::HEAD_LENGTH);//TODO:get the ret value
+            //if connect ok ,then continue;
+            //             int request_length=Protocol::encode_configuration_request(buf);//encoder buffer
+            //             QByteArray rst=clt->call_server(buf,request_length);//talk to server
+            //             rst=rst.remove(0,Protocol::HEAD_LENGTH);//TODO:get the ret value
 
-clt->get_config();
+            clt->get_config();
 #if 0
-             p_cfg->set_config( clt->get_config());
+            p_cfg->set_config( clt->get_config());
 
-             //handle tree list
-             window->treeWidget_devices->clear();
-             p_item_device_root=new QTreeWidgetItem(QStringList(clt->server_ip));
-             window->treeWidget_devices->addTopLevelItem(p_item_device_root);
-             for(int i=0;i<p_cfg->cfg.camera_amount;i++){
-                 QTreeWidgetItem *itm1=new QTreeWidgetItem(QStringList(p_cfg->cfg.camera[i].ip));
-                 p_item_device_root->addChild(itm1);
-             }
+            //handle tree list
+            window->treeWidget_devices->clear();
+            p_item_device_root=new QTreeWidgetItem(QStringList(clt->server_ip));
+            window->treeWidget_devices->addTopLevelItem(p_item_device_root);
+            for(int i=0;i<p_cfg->cfg.camera_amount;i++){
+                QTreeWidgetItem *itm1=new QTreeWidgetItem(QStringList(p_cfg->cfg.camera[i].ip));
+                p_item_device_root->addChild(itm1);
+            }
 #endif
-         }else{
-             prt(info,"no server found");
-         }
+        }else{
+            prt(info,"no server found");
+        }
     }
 
     void handle_msg(QByteArray rst)
     {
-         prt(info,"@@@@@@@@@@@@@@@@@@");
-         p_cfg->set_config( rst);
-
-         //handle tree list
-         window->treeWidget_devices->clear();
-         p_item_device_root=new QTreeWidgetItem(QStringList(clt->server_ip));
-         window->treeWidget_devices->addTopLevelItem(p_item_device_root);
-         for(int i=0;i<p_cfg->cfg.camera_amount;i++){
-             QTreeWidgetItem *itm1=new QTreeWidgetItem(QStringList(p_cfg->cfg.camera[i].ip));
-             p_item_device_root->addChild(itm1);
-         }
+        p_cfg->set_config( rst);
+        //handle tree list
+        window->treeWidget_devices->clear();
+        p_item_device_root=new QTreeWidgetItem(QStringList(clt->server_ip));
+        window->treeWidget_devices->addTopLevelItem(p_item_device_root);
+        for(int i=0;i<p_cfg->cfg.camera_amount;i++){
+            QTreeWidgetItem *itm1=new QTreeWidgetItem(QStringList(p_cfg->cfg.camera[i].ip));
+            p_item_device_root->addChild(itm1);
+        }
     }
 
 private:
