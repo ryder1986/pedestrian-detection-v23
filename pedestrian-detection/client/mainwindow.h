@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-//goal, handle graphic interface;
+
 #include <QMainWindow>
 #include "ui_form.h"
 #include "client.h"
@@ -11,7 +11,7 @@
 #include "searchwidget.h"
 using namespace std ;
 class VideoThread:public QObject{
-    Q_OBJECT
+Q_OBJECT
     typedef struct data{
         VideoSrc *p_src;
         QString url;
@@ -34,9 +34,9 @@ private:
             if(flg){
                 p_data->lock.lock();
                 if(p_data->rst.size()>0)
-                    p_data->video_render->set_rects(p_data->rst);
-                p_data->rst.clear();
-                p_data->lock.unlock();
+                     p_data->video_render->set_rects(p_data->rst);
+                   p_data->rst.clear();
+                   p_data->lock.unlock();
                 p_data->video_render->update_mat(mt);
 
             }
@@ -79,7 +79,7 @@ public slots:
             QRect r;
             r.setRect(l[0].toInt(),l[1].toInt(),l[2].toInt(),l[3].toInt());
 
-            // prt(info,"#### %s",l[0].toStdString().data());
+           // prt(info,"#### %s",l[0].toStdString().data());
         }
 #endif
     }
@@ -116,7 +116,8 @@ private slots:
     void del_camera(bool checked)
     {
         if(p_video_thread)
-        {
+         {
+
             delete p_video_thread;
             p_video_thread=NULL;
         }

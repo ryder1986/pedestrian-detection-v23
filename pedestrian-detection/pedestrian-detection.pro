@@ -3,6 +3,7 @@ TEMPLATE = subdirs
 SUBDIRS += \
     client \
     server \
-    common
+    common \
+    Alg
 
 

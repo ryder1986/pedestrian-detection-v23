@@ -39,6 +39,7 @@ public:
         p_data->p_worker=new VideoProcessor;
       //  p_data->sender=  new ProcessedDataSender;
         QByteArray rst;
+        string str;
         while(!p_data->quit)
         {
             // p_data->sender=  ProcessedDataSender::get_instance();
@@ -46,13 +47,24 @@ public:
             ret=p_data->p_src->fetch_frame(mt);
             if(ret){
                 rst.clear();
-                p_data->p_worker->work(mt,rst,p_data->url);
-             //   this_thread::sleep_for(chrono::milliseconds(100));
+             //   p_data->p_worker->work_inside(mt,rst,p_data->url);
+              //  p_data->p_worker->work_inside(mt,str);
+
+                 //   this_thread::sleep_for(chrono::milliseconds(100));
                 //  rst.clear();rst.append(p_data->index);
                 //                if(p_data->output&&rst.length()){
                 //                    p_data->sender->send(rst);
                 //                    rst.clear();
-                //                }
+                //
+
+
+#if IS_UNIX
+               p_data->p_worker->work(mt,str);}
+                 QByteArray ss(str.data());
+                 rst=ss;
+#else
+                p_data->p_worker->work_inside(mt,rst,p_data->url);
+#endif
                 if(rst.length()>0){
                     p_data->lock.lock();
                     p_data->rst=rst;

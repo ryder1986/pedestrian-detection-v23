@@ -288,6 +288,7 @@ public:
 
     QByteArray  call_server(char *buf,int len)
     {
+
         QByteArray ret;
         ret.resize(0);
         int write_bytes=0;
