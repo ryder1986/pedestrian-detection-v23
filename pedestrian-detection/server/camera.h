@@ -59,7 +59,7 @@ public:
 
 
 #if IS_UNIX
-               p_data->p_worker->work(mt,str);}
+               p_data->p_worker->work(mt,str);
                  QByteArray ss(str.data());
                  rst=ss;
 #else
@@ -69,10 +69,11 @@ public:
                     p_data->lock.lock();
                     p_data->rst=rst;
                     p_data->lock.unlock();
-                }else{
-                this_thread::sleep_for(chrono::milliseconds(30));
-            }
-        }
+                 }}
+                else{
+                        this_thread::sleep_for(chrono::milliseconds(30));
+                 }
+           }
         prt(info,"quit camera thread");
      //   delete   p_data->sender;
         delete p_data->p_src;
