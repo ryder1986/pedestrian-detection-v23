@@ -30,16 +30,17 @@ install_setting.files=$$OUT_PWD/$$TARGET config.json run.sh
 message(install ($$install_setting.files) in ($$install_setting.path))
 INSTALLS+=install_setting
 }else{
+
+
 message(build $$TARGET on win32)
-INSTALL_PATH="Z://install-pedestrian-detection"
-install_setting.path=$$INSTALL_PATH
-    debug{
-        install_setting.files=$$OUT_PWD/debug/client.exe
-    }
-    release{
-        install_setting.files=$$OUT_PWD/release/client.exe
+install_setting.path=$$OUT_PWD/install
+    CONFIG(debug, debug|release){
+        install_setting.files=$$OUT_PWD/debug/client.exe  config.json
+    }else{
+        install_setting.files=$$OUT_PWD/release/client.exe  config.json
     }
 INSTALLS=install_setting
+message(install ($$install_setting.files) in ($$install_setting.path))
 }
 
 FORMS += \

@@ -162,6 +162,8 @@ public:
     bool try_get_data(int index,QByteArray &ba)
     {
         bool ret=false;
+        if(index<0)
+            return false;
         cfg_lock.lock();
         ba=cameras[index]->get_rst();
         if(ba.length()){

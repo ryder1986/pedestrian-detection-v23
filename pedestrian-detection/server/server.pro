@@ -32,14 +32,14 @@ install_setting.files=$$OUT_PWD/$$TARGET config.json run.sh hogcascade_pedestria
 message(install ($$install_setting.files) in ($$install_setting.path))
 INSTALLS+=install_setting
 }else{
+
 message(build $$TARGET on win32)
-INSTALL_PATH="Z://install-pedestrian-detection"
-install_setting.path=$$INSTALL_PATH
-    debug{
-        install_setting.files=$$OUT_PWD/debug/server.exe
+install_setting.path=$$OUT_PWD/install
+    CONFIG(debug, debug|release){
+        install_setting.files=$$OUT_PWD/debug/server.exe  config.json run.sh hogcascade_pedestrians.xml
+    }else{
+        install_setting.files=$$OUT_PWD/release/server.exe  config.json run.sh hogcascade_pedestrians.xml
     }
-    release{
-        install_setting.files=$$OUT_PWD/release/server.exe
-    }
-    INSTALLS+=install_setting
+INSTALLS=install_setting
+message(install ($$install_setting.files) in ($$install_setting.path))
 }

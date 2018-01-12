@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "ui_form.h"
 #include "client.h"
-#include "videoprocessor.h"
+//#include "videoprocessor.h"
 #include "config.h"
 #include "videosrc.h"
 #include <QMenu>
