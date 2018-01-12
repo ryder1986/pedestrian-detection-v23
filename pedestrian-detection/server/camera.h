@@ -58,7 +58,8 @@ public:
                 //
 
 
-#if IS_UNIX
+//#if IS_UNIX
+#if 1
                p_data->p_worker->work(mt,str);
                  QByteArray ss(str.data());
                  rst=ss;

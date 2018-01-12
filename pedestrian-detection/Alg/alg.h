@@ -8,6 +8,7 @@
 #include <opencv2/objdetect/objdetect.hpp>
 #include "alg_global.h"
 #include "cstdio"
+namespace pd {
 using namespace cv;
 class ALGSHARED_EXPORT Alg
 {
@@ -23,5 +24,5 @@ private:
     Mat pedestrians;
 
 };
-
+}
 #endif // ALG_H

@@ -1,7 +1,7 @@
 #include "alg.h"
 
 #include <cstdio>
-
+using namespace pd;
 Alg::Alg()
 {
     printf("alg init\n");

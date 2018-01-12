@@ -30,3 +30,17 @@ unix {
     INSTALLS += target-lib
 }
 
+win32{
+    target-inc.path = $$ALGPATH/include
+    target-inc.files =alg.h alg_global.h
+    INSTALLS += target-inc
+
+    target-lib.path = $$ALGPATH/lib
+
+    CONFIG(debug, debug|release){
+         target-lib.files = $$OUT_PWD/debug/Alg.lib  $$OUT_PWD/debug/Alg.dll
+    }else{
+         target-lib.files = $$OUT_PWD/release/Alg.lib  $$OUT_PWD/release/Alg.dll
+    }
+    INSTALLS += target-lib
+}

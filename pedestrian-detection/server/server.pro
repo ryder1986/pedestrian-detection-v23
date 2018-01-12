@@ -13,9 +13,11 @@ CONFIG   += console
 CONFIG   -= app_bundle
 TEMPLATE = app
 CONFIG +=c++11
-unix{
+
 LIBS+=-L$$ALGPATH/lib -lAlg
-}
+
+
+
 HEADERS += \
     server.h \
     camera.h \

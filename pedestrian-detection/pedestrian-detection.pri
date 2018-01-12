@@ -12,6 +12,7 @@ win32{
 CVPATH="Z:\libs\third-party\opencv"
 CV_PREFIX="\opencv-vs2013-x86"
 ALGPATH="Z:\libs\third-party\alg"
+ALGPATH="Z:\libs\alg"
 #COMMON_LIB_PATH="Z:\res\common\lib-win32"
 ##DESTDIR=Z:\build
 }
@@ -38,6 +39,7 @@ unix{
 
 win32{
     INCLUDEPATH +="$$CVPATH\\$$CV_PREFIX\include"
+    INCLUDEPATH +="$$ALGPATH/include"
     message(includepath:$$INCLUDEPATH)
     CONFIG(debug, debug|release){
         LIBS+=-L$$CVPATH\\$$CV_PREFIX\lib -lopencv_core249d -lopencv_highgui249d\
